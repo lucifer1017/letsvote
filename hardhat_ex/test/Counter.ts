@@ -10,7 +10,7 @@ describe("Counter", async function () {
 
   it("Should emit the Increment event when calling the inc() function", async function () {
     const counter = await viem.deployContract("Counter");
-
+  
     await viem.assertions.emitWithArgs(
       counter.write.inc(),
       counter,

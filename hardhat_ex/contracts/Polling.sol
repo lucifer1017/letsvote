@@ -33,7 +33,7 @@ contract Polling {
         VoteOptions choice
     );
 
-    function addProposal(string _description) external onlyOwner {
+    function addProposal(string memory _description) external onlyOwner {
         uint _proposalId = proposals.length;
 
         proposals.push(
