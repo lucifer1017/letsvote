@@ -1,0 +1,39 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-9c2745ccc03a0013e7268ab01f88beae98e688a5",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "userSourceNameMap": {
+    "contracts/Polling.sol": "project/contracts/Polling.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/Polling.sol": {
+        "content": "//SPDX-License-Identifier: UNLICENSED\r\n\r\npragma solidity ^0.8.28;\r\n\r\ncontract Polling {\r\n    address public owner;\r\n    Proposal[] public proposals;\r\n    enum VoteOptions {\r\n        None,\r\n        Yes,\r\n        No\r\n    }\r\n    mapping(uint => mapping(address => VoteOptions)) public votes;\r\n\r\n    constructor() {\r\n        owner = msg.sender;\r\n    }\r\n\r\n    modifier onlyOwner() {\r\n        require(msg.sender == owner, \"Only owner can access\");\r\n        _;\r\n    }\r\n\r\n    struct Proposal {\r\n        string description;\r\n        uint yesCount;\r\n        uint noCount;\r\n    }\r\n    event ProposalCreated(uint indexed proposalId, string description);\r\n    event Voted(\r\n        address indexed voter,\r\n        uint indexed _proposalIdVotedFor,\r\n        VoteOptions choice\r\n    );\r\n\r\n    function addProposal(string memory _description) external onlyOwner {\r\n        uint _proposalId = proposals.length;\r\n\r\n        proposals.push(\r\n            Proposal({description: _description, yesCount: 0, noCount: 0})\r\n        );\r\n        emit ProposalCreated(_proposalId, _description);\r\n    }\r\n\r\n    function vote(uint _proposalId, VoteOptions _choice) external {\r\n        require(_proposalId < proposals.length, \"Invalid proposal ID\");\r\n        require(\r\n            votes[_proposalId][msg.sender] == VoteOptions.None,\r\n            \"You have already voted for this Proposal\"\r\n        );\r\n        require(\r\n            _choice == VoteOptions.Yes || _choice == VoteOptions.No,\r\n            \"Invalid Choice\"\r\n        );\r\n\r\n        votes[_proposalId][msg.sender] = _choice;\r\n        if (_choice == VoteOptions.Yes) {\r\n            proposals[_proposalId].yesCount += 1;\r\n        } else {\r\n            proposals[_proposalId].noCount += 1;\r\n        }\r\n        emit Voted(msg.sender, _proposalId, _choice);\r\n    }\r\n}\r\n"
+      }
+    }
+  }
+}
