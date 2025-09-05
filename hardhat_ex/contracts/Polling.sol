@@ -61,4 +61,8 @@ contract Polling {
         }
         emit Voted(msg.sender, _proposalId, _choice);
     }
+
+    function getProposalCount() external view returns (uint) {
+        return proposals.length;
+    }
 }
