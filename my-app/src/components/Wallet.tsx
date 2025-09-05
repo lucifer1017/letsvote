@@ -1,4 +1,4 @@
-import { useConnect,useAccount,useChainId,useDisconnect } from "wagmi"
+import { useConnect,useAccount,useDisconnect } from "wagmi"
 
 const Wallet = () => {
     const {address,isConnected}=useAccount();
