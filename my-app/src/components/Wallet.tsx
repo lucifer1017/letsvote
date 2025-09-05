@@ -1,31 +1,27 @@
-import { useConnect,useAccount,useDisconnect } from "wagmi"
+import { useConnect,useAccount,useDisconnect } from "wagmi";
+
 
 const Wallet = () => {
     const {address,isConnected}=useAccount();
     const {connect,connectors}=useConnect();
     const {disconnect}=useDisconnect();
-    // const chainId=useChainId();
-
-
 
   return (
-    <div className="flex justify-center items-center p-4 my-10 mx-auto w-1/2 border-2 border-black shadow-2xl rounded-2xl">
-        {!isConnected?
-        (
-            <button className="p-2 m-1 rounded-lg text-lg font-semibold bg-green-600 text-white cursor-pointer"
+    <div className="flex items-center w-1/2 justify-center shadow-2xl p-2 my-10 mx-auto border-2 border-black rounded-lg">
+        {!isConnected ?(
+            <button className="p-2 m-2 shadow-2xl text-white bg-green-600 rounded-lg cursor-pointer"
             onClick={()=>connect({connector:connectors[0]})}>
                 Connect Wallet
-            </button>
-        ):(<div className="flex flex-col gap-2.5">
-            <div className="flex items-center flex-col justify-center gap-2">
-                <span className="font-bold font-sans">{address}</span>
-                <button className="p-2 m-1 text-white bg-red-600 cursor-pointer rounded-lg"
-                onClick={()=>disconnect()}>
-                    Disconnect
                 </button>
-
+        ):(
+            <div className="flex flex-col items-center justify-center">
+                <span className="font-semibold font-stretch-50%">{address}</span>
+                <button className="cursor-pointer p-2 m-2 text-white border-2 bg-red-600 rounded-lg font-sans"
+                onClick={()=>disconnect()}
+                >Disconnect
+                </button>
             </div>
-            </div>)}
+        )}
 
     </div>
   )
