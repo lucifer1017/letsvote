@@ -12,8 +12,8 @@ export function AddProposalForm() {
     hash: txHash,
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = (e:React.FormEvent) => {
+    e.preventDefault();
     if (!description.trim()) return
     writeContract({
       address: POLLING_ADDRESS,
@@ -24,7 +24,7 @@ export function AddProposalForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded-xl shadow-sm flex flex-col gap-3">
+    <div className="p-4  mt-2 mb-4 mx-2 border rounded-xl shadow-sm flex flex-col gap-3">
       <input
         type="text"
         value={description}
@@ -33,7 +33,7 @@ export function AddProposalForm() {
         className="border p-2 rounded-lg"
       />
       <button
-        type="submit"
+        onClick={handleSubmit}
         disabled={isPending || isConfirming}
         className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
       >
@@ -41,6 +41,6 @@ export function AddProposalForm() {
       </button>
       {isSuccess && <p className="text-sm text-green-600">✅ Proposal added!</p>}
       {error && <p className="text-sm text-red-600">⚠️ {error.message}</p>}
-    </form>
+    </div>
   )
 }
