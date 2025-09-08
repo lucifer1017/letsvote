@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import POLLING_ABI from '../abi/polling.json'
+import POLLING_ABI from '../abi/Polling.json'
 
 const POLLING_ADDRESS = '0x5FbDB2315678afecb367f032d93F642f64180aa3'
 
